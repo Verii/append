@@ -54,16 +54,16 @@ append(const char *str, size_t str_len,
         if (!S_ISREG(ss.st_mode)) {
                 fprintf(stderr, "\"%.*s\" not a file\n",
                         (int)path_len, path);
-                return 0;
+                return 1;
         }
 
         FILE *fappend = fopen(path, "a");
         if (!fappend) {
                 perror(path);
+                return 1;
         }
 
         fwrite(str, 1, str_len, fappend);
-
         fclose(fappend);
 
         return 0;
@@ -104,7 +104,6 @@ in_source(FILE *fin, char **buf, int *buf_len)
 
         *buf = stdin_buf;
         *buf_len = stdin_len;
-
         fclose(fin);
 
         return 0;
