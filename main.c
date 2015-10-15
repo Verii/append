@@ -52,7 +52,7 @@ append(const char *str, size_t str_len,
         lstat(path, &ss);
 
         if (!S_ISREG(ss.st_mode)) {
-                fprintf(stderr, "\"%.*s\" not a file\n",
+                fprintf(stderr, "\"%.*s\" not a file or does not exist.\n",
                         (int)path_len, path);
                 return 1;
         }
