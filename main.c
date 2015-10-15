@@ -24,7 +24,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void usage(void)
+void
+usage(void)
 {
         fprintf(stderr, "Copyright 2015 James Smith <james@apertum.org>\n");
         fprintf(stderr,
@@ -42,7 +43,8 @@ void usage(void)
         exit(1);
 }
 
-int append(const char *str, size_t str_len,
+int
+append(const char *str, size_t str_len,
            const char *path, size_t path_len)
 {
         struct stat ss;
@@ -68,7 +70,8 @@ int append(const char *str, size_t str_len,
 }
 
 /* Reads in the source file at path to buffer buf with length buf_len */
-int in_source(FILE *fin, char **buf, int *buf_len)
+int
+in_source(FILE *fin, char **buf, int *buf_len)
 {
         char *stdin_buf;
         size_t stdin_buflen = 4096, stdin_len = 0;
@@ -107,7 +110,8 @@ int in_source(FILE *fin, char **buf, int *buf_len)
         return 0;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
         FILE *fin = NULL;
 
@@ -142,18 +146,20 @@ int main(int argc, char **argv)
         char *in_buf = NULL;
         int in_buflen = 0;
 
-        if (in_source(fin, &in_buf, &in_buflen) != 0)
+        if (in_source(fin, &in_buf, &in_buflen) != 0 ||
+            !in_buf || in_buflen <= 0)
+        {
                 return 1;
-
-        if (!in_buf || in_buflen <= 0)
-                return 1;
+        }
 
         /* Append buffer to each file */
-        do {
+        while (optind < argc) {
                 if (verbose_opt)
                         fprintf(stderr, "Writing to file: %s\n", argv[optind]);
                 append(in_buf, in_buflen, argv[optind], strlen(argv[optind]));
-        } while (++optind < argc);
+
+                optind++;
+        }
 
         free(in_buf);
 
