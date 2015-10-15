@@ -7,7 +7,7 @@ DESTDIR = /usr/local/bin
 
 CPPFLAGS = -D_POSIX_C_SOURCE=200809L -DVERSION=\"${VERSION}\" -DNDEBUG
 
-DEBUG = -g -Og -DDEBUG
+DEBUG = -g -O0 -DDEBUG
 CFLAGS = -std=c99 -Wall -Wextra -Werror -Os
 
 LDFLAGS =
