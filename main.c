@@ -73,7 +73,7 @@ int in_source(FILE *fin, char **buf, int *buf_len)
         char *stdin_buf;
         size_t stdin_buflen = 4096, stdin_len = 0;
         stdin_buf = malloc(stdin_buflen);
-        if (stdin_buf == NULL) {
+        if (!stdin_buf) {
                 perror("Cannot get memory");
                 return 1;
         }
@@ -139,10 +139,13 @@ int main(int argc, char **argv)
                 fprintf(stderr, "Reading from stdin, press ^D to quit.\n");
         }
 
-        char *in_buf;
+        char *in_buf = NULL;
         int in_buflen = 0;
 
         if (in_source(fin, &in_buf, &in_buflen) != 0)
+                return 1;
+
+        if (!in_buf || in_buflen <= 0)
                 return 1;
 
         /* Append buffer to each file */
