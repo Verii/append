@@ -28,7 +28,7 @@ void usage(void)
 {
         fprintf(stderr, "Copyright 2015 James Smith <james@apertum.org>\n");
         fprintf(stderr,
-                "prepend: %s\n\t"
+                "append: %s\n\t"
                 "[-s source] Read from source\n\t"
                 " read from stdin by default\n\t"
                 "[-v] Print which files are being written to\n\t"
